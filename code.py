@@ -52,15 +52,15 @@ def process_line(line):
         elif inst == "STRING":
             layout.write(args[1])
         elif inst == "GUI" or inst == "WINDOWS":
-            kbd.send(Keycode.WINDOWS, keycode_dict.get(args[1]))
+            kbd.send(Keycode.WINDOWS, keycode_dict.get(args[1].upper()))
         elif inst == "APP" or inst == "MENU":
             kbd.send(Keycode.APPLICATION)
         elif inst == "SHIFT":
-            kbd.send(Keycode.SHIFT, keycode_dict.get(args[1]))
+            kbd.send(Keycode.SHIFT, keycode_dict.get(args[1].upper()))
         elif inst == "ALT":
-            kbd.send(Keycode.ALT, keycode_dict.get(args[1]))
+            kbd.send(Keycode.ALT, keycode_dict.get(args[1].upper()))
         elif inst == "CONTROL" or inst == "CTRL":
-            kbd.send(Keycode.CONTROL, keycode_dict.get(args[1]))
+            kbd.send(Keycode.CONTROL, keycode_dict.get(args[1].upper()))
         elif inst == "DOWNARROW" or inst == "DOWN":
             kbd.send(Keycode.DOWN_ARROW)
         elif inst == "LEFTARROW" or inst == "LEFT":
@@ -110,3 +110,4 @@ def process_line(line):
 
 for line in lines:
     process_line(line)
+
