@@ -119,10 +119,3 @@ def char_to_keycode(char):
     }
     
     return switcher.get(char.upper())
-
-def kbd_send(kbd, char):
-    if char.isalpha():
-        if char.isupper():
-            kbd.send(keycode.SHIFT, char_to_keycode(char))
-        else:
-            kbd.send(char_to_keycode(char))
