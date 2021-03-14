@@ -98,7 +98,7 @@ def process_line(line):
         elif inst == "TAB":
             kbd.send(Keycode.TAB)
         elif inst == "FN":
-            print("FN Instruction can't be implimented, CircuitPython doesn't provide the macOS FN keycode, this is pretty useless anyway")
+            print("FN Instruction can't be implemented, CircuitPython doesn't provide the macOS FN keycode, this is pretty useless anyway")
         elif inst == "REPEAT":
             try:
                 for _ in range(int(args[1])):
