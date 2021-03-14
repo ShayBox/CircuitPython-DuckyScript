@@ -6,4 +6,5 @@ Pull requests are welcome
 
 Known Issues:
   - macOS FN modifier key (CircuitPython limitation)
+  - F20+ (CircuitPython limitation)
   - Missing Modes and Mode switching (PR Welcome)
