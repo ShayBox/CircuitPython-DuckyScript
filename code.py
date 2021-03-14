@@ -75,6 +75,8 @@ def process_line(line):
             kbd.send(Keycode.CAPS_LOCK)
         elif inst == "DELETE":
             kbd.send(Keycode.DELETE)
+        elif inst == "ENTER" or inst == "RETURN":
+            kbd.send(Keycode.ENTER) 
         elif inst == "ESC" or inst == "ESCAPE":
             kbd.send(Keycode.ESCAPE)
         elif inst == "HOME":
@@ -103,7 +105,6 @@ def process_line(line):
                     process_line(previous_line)
             except ValueError:
                 print("Invalid integer")
-                return
 
         previous_line = line
 
