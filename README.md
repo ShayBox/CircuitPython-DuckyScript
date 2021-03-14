@@ -1,6 +1,4 @@
 # CircuitPython-DuckyScript
-DuckyScript interpreter in CircuitPython
-
 DuckyScript interpreter written in CircuitPython tested on a RaspberryPI Pico
 
 This may not be 100% compatible and bug free  
