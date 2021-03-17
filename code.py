@@ -95,6 +95,44 @@ def press(k):
         kbd.press(Keycode.RIGHT_ALT)
     elif k == 'RIGHT_GUI':
         kbd.press(Keycode.RIGHT_GUI)
+    elif k == 'F1':
+        kbd.press(Keycode.F1)
+    elif k == 'F2':
+        kbd.press(Keycode.F2)
+    elif k == 'F3':
+        kbd.press(Keycode.F3)
+    elif k == 'F4':
+        kbd.press(Keycode.F4)
+    elif k == 'F5':
+        kbd.press(Keycode.F5)
+    elif k == 'F6':
+        kbd.press(Keycode.F6)
+    elif k == 'F7':
+        kbd.press(Keycode.F7)
+    elif k == 'F8':
+        kbd.press(Keycode.F8)
+    elif k == 'F9':
+        kbd.press(Keycode.F9)
+    elif k == 'F10':
+        kbd.press(Keycode.F10)
+    elif k == 'F11':
+        kbd.press(Keycode.F11)
+    elif k == 'F12':
+        kbd.press(Keycode.F12)
+    elif k == 'F13':
+        kbd.press(Keycode.F13)
+    elif k == 'F14':
+        kbd.press(Keycode.F14)
+    elif k == 'F15':
+        kbd.press(Keycode.F15)
+    elif k == 'F16':
+        kbd.press(Keycode.F16)
+    elif k == 'F17':
+        kbd.press(Keycode.F17)
+    elif k == 'F18':
+        kbd.press(Keycode.F18)
+    elif k == 'F19':
+        kbd.press(Keycode.F19)
 
 def process(line):
     args = line.split(' ', 1)
