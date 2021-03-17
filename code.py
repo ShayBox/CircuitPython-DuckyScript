@@ -3,111 +3,149 @@ import usb_hid
 from adafruit_hid.keyboard import Keyboard
 from adafruit_hid.keycode import Keycode
 from adafruit_hid.keyboard_layout_us import KeyboardLayoutUS
-from keyboard import keycode_dict
-
-debug = True
-
-if debug: print("Starting...")
 
 kbd = Keyboard(usb_hid.devices)
 layout = KeyboardLayoutUS(kbd)
 
-with open("payload.txt") as file:
-    lines = file.read().splitlines()
-
-if debug: print("Printing lines of payload", lines)
-
 default_delay = 0
-previous_line = ""
-def process_line(line):
-        if debug: print("LINE:", line)
+previous_line = ''
 
-        args = line.split(" ", 1)
-        if debug: print("ARGS:", args)
+def press(k):
+    if len(k) == 1:
+        layout.write(k[0])
+    elif k == 'ENTER' or k == 'RETURN':
+        kbd.press(Keycode.ENTER)
+    elif k == 'ESC' or k == 'ESCAPE':
+        kbd.press(Keycode.ESCAPE)
+    elif k == 'BACKSPACE':
+        kbd.press(Keycode.BACKSPACE)
+    elif k == 'TAB':
+        kbd.press(Keycode.TAB)
+    elif k == 'SPACE' or k == 'SPACEBAR':
+        kbd.press(Keycode.SPACEBAR)
+    elif k == 'MINUS':
+        kbd.press(Keycode.MINUS)
+    elif k == 'EQUAL' or k == 'EQUALS':
+        kbd.press(Keycode.EQUALS)
+    elif k == 'LEFT_BRACKET' or k == 'LEFTBRACKET':
+        kbd.press(Keycode.LEFT_BRACKET)
+    elif k == 'RIGHT_BRACKET' or k == 'RIGHTBRACKET':
+        kbd.press(Keycode.RIGHT_BRACKET)
+    elif k == 'BACKSLASH' or k == 'RETURN':
+        kbd.press(Keycode.BACKSLASH)
+    elif k == 'POUND' or k == 'RETURN':
+        kbd.press(Keycode.POUND)
+    elif k == 'SEMICOLON' or k == 'RETURN':
+        kbd.press(Keycode.SEMICOLON)
+    elif k == 'QUOTE' or k == 'RETURN':
+        kbd.press(Keycode.QUOTE)
+    elif k == 'TILDE':
+        kbd.press(Keycode.GRAVE_ACCENT)
+    elif k == 'COMMA':
+        kbd.press(Keycode.COMMA)
+    elif k == 'PERIOD':
+        kbd.press(Keycode.PERIOD)
+    elif k == 'SLASH' or k == 'FORWARD_SLASH' or k == 'FORWARDSLASH':
+        kbd.press(Keycode.FORWARD_SLASH)
+    elif k == 'CAPS' or k == 'CAPS_LOCK' or k == 'CAPSLOCK':
+        kbd.press(Keycode.CAPS_LOCK)
+    elif k == 'PRINT' or k == 'PRINT_SCREEN' or k == 'PRINTSCREEN':
+        kbd.press(Keycode.PRINT_SCREEN)
+    elif k == 'SCROLL' or k == 'SCROLL_LOCK' or k == 'SCROLLLOCK':
+        kbd.press(Keycode.SCROLL_LOCK)
+    elif k == 'PAUSE' or k == 'BREAK':
+        kbd.press(Keycode.PAUSE)
+    elif k == 'INSERT':
+        kbd.press(Keycode.INSERT)
+    elif k == 'HOME':
+        kbd.press(Keycode.HOME)
+    elif k == 'PAGE_UP' or k == 'PAGEUP':
+        kbd.press(Keycode.PAGE_UP)
+    elif k == 'DELETE':
+        kbd.press(Keycode.DELETE)
+    elif k == 'END':
+        kbd.press(Keycode.END)
+    elif k == 'PAGE_DOWN' or k == 'PAGEDOWN':
+        kbd.press(Keycode.PAGE_DOWN)
+    elif k == 'RIGHT' or k == 'RIGHT_ARROW' or k == 'RIGHTARROW':
+        kbd.press(Keycode.RIGHT_ARROW)
+    elif k == 'LEFT' or k == 'LEFT_ARROW' or k == 'LEFTARROW':
+        kbd.press(Keycode.LEFT_ARROW)
+    elif k == 'DOWN' or k == 'DOWN_ARROW' or k == 'DOWNARROW':
+        kbd.press(Keycode.DOWN_ARROW)
+    elif k == 'UP' or k == 'UP_ARROW' or k == 'UPARROW':
+        kbd.press(Keycode.UP_ARROW)
+    elif k == 'NUM' or k == 'NUM_LOCK' or k == 'NUMLOCK':
+        kbd.press(Keycode.NUM_LOCK)
+    elif k == 'APPLICATION' or k == 'MENU':
+        kbd.press(Keycode.APPLICATION)
+    elif k == 'LEFT_CONTROL' or k == 'CONTROL' or k == 'CTRL':
+        kbd.press(Keycode.LEFT_CONTROL)
+    elif k == 'LEFT_SHIFT' or k == 'SHIFT':
+        kbd.press(Keycode.LEFT_SHIFT)
+    elif k == 'LEFT_GUI' or k == 'GUI':
+        kbd.press(Keycode.LEFT_GUI)
+    elif k == 'LEFT_WINDOWS' or k == 'WINDOWS':
+        kbd.press(Keycode.WINDOWS)
+    elif k == 'RIGHT_CONTROL':
+        kbd.press(Keycode.RIGHT_CONTROL)
+    elif k == 'RIGHT_SHIFT':
+        kbd.press(Keycode.RIGHT_SHIFT)
+    elif k == 'RIGHT_ALT':
+        kbd.press(Keycode.RIGHT_ALT)
+    elif k == 'RIGHT_GUI':
+        kbd.press(Keycode.RIGHT_GUI)
 
-        inst = args[0]
-        if debug: print("INST:", inst)
+def process(line):
+    args = line.split(' ', 1)
+    inst = args[0]
 
-        if inst == "REM":
+    if inst == 'REM':
+        return
+
+    global default_delay
+    global previous_line
+
+    if default_delay > 0:
+        time.sleep(default_delay / 1000)
+
+    if inst == 'DEFAULT_DELAY' or inst == 'DEFAULTDELAY':
+        try:
+            default_delay = int(args[1])
+        except ValueError:
             return
-        
-        global default_delay
-        global previous_line
+    elif inst == 'DELAY':
+        try:
+            time.sleep(int(args[1]) / 1000)
+        except ValueError:
+            return
+    elif inst == 'STRING_DELAY' or inst == 'STRINGDELAY':
+        try:
+            args_1 = args[1].split(' ', 1)
+            for c in args_1[1]:
+                layout.write(c)
+                time.sleep(int(args_1[0]) / 1000)
+        except ValueError:
+            return
+    elif inst == 'STRING':
+        layout.write(args[1])
+    elif inst == 'REPEAT':
+        try:
+            for _ in range(int(args[1])):
+                process(previous_line)
+        except ValueError:
+            return
+    else:
+        press(inst)
+        if len(args) > 1:
+            for s in args[1].split(' '):
+                press(s)
 
-        if default_delay > 0:
-            time.sleep(default_delay / 1000)
+    previous_line = line
 
-        if inst == "DEFAULT_DELAY" or inst == "DEFAULTDELAY":
-            try:
-                default_delay = int(args[1])
-            except ValueError:
-                print("Invalid integer")
-                return
-        elif inst == "DELAY":
-            try:
-                time.sleep(int(args[1]) / 1000)
-            except ValueError:
-                print("Invalid integer")
-                return
-        elif inst == "STRING":
-            layout.write(args[1])
-        elif inst == "GUI" or inst == "WINDOWS":
-            kbd.send(Keycode.WINDOWS, keycode_dict.get(args[1].upper()))
-        elif inst == "APP" or inst == "MENU":
-            kbd.send(Keycode.APPLICATION)
-        elif inst == "SHIFT":
-            kbd.send(Keycode.SHIFT, keycode_dict.get(args[1].upper()))
-        elif inst == "ALT":
-            kbd.send(Keycode.ALT, keycode_dict.get(args[1].upper()))
-        elif inst == "CONTROL" or inst == "CTRL":
-            kbd.send(Keycode.CONTROL, keycode_dict.get(args[1].upper()))
-        elif inst == "DOWNARROW" or inst == "DOWN":
-            kbd.send(Keycode.DOWN_ARROW)
-        elif inst == "LEFTARROW" or inst == "LEFT":
-            kbd.send(Keycode.LEFT_ARROW)
-        elif inst == "RIGHTARROW" or inst == "RIGHT":
-            kbd.send(Keycode.RIGHT_ARROW)
-        elif inst == "UPARROW" or inst == "UP":
-            kbd.send(Keycode.UP_ARROW)
-        elif inst == "BREAK" or inst == "PAUSE":
-            kbd.send(Keycode.PAUSE)
-        elif inst == "CAPSLOCK":
-            kbd.send(Keycode.CAPS_LOCK)
-        elif inst == "DELETE":
-            kbd.send(Keycode.DELETE)
-        elif inst == "ENTER" or inst == "RETURN":
-            kbd.send(Keycode.ENTER) 
-        elif inst == "ESC" or inst == "ESCAPE":
-            kbd.send(Keycode.ESCAPE)
-        elif inst == "HOME":
-            kbd.send(Keycode.HOME)
-        elif inst == "INSERT":
-            kbd.send(Keycode.INSERT)
-        elif inst == "NUMLOCK":
-            kbd.send(Keycode.KEYPAD_NUMLOCK)
-        elif inst == "PAGEUP":
-            kbd.send(Keycode.PAGE_UP)
-        elif inst == "PAGEDOWN":
-            kbd.send(Keycode.PAGE_DOWN)
-        elif inst == "PRINTSCREEN":
-            kbd.send(Keycode.PRINT_SCREEN)
-        elif inst == "SCROLLLOCK":
-            kbd.send(Keycode.SCROLL_LOCK)
-        elif inst == "SPACE":
-            kbd.send(Keycode.SPACEBAR)
-        elif inst == "TAB":
-            kbd.send(Keycode.TAB)
-        elif inst == "FN":
-            print("FN Instruction can't be implemented, CircuitPython doesn't provide the macOS FN keycode, this is pretty useless anyway")
-        elif inst == "REPEAT":
-            try:
-                for _ in range(int(args[1])):
-                    process_line(previous_line)
-            except ValueError:
-                print("Invalid integer")
+    kbd.release_all()
 
-        previous_line = line
-
-for line in lines:
-    process_line(line)
-
+with open('payload.txt') as file:
+    lines = file.read().splitlines()
+    for line in lines:
+        process(line)
