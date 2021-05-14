@@ -31,13 +31,13 @@ def press(k):
         kbd.press(Keycode.LEFT_BRACKET)
     elif k == 'RIGHT_BRACKET' or k == 'RIGHTBRACKET':
         kbd.press(Keycode.RIGHT_BRACKET)
-    elif k == 'BACKSLASH' or k == 'RETURN':
+    elif k == 'BACKSLASH':
         kbd.press(Keycode.BACKSLASH)
-    elif k == 'POUND' or k == 'RETURN':
+    elif k == 'POUND':
         kbd.press(Keycode.POUND)
-    elif k == 'SEMICOLON' or k == 'RETURN':
+    elif k == 'SEMICOLON':
         kbd.press(Keycode.SEMICOLON)
-    elif k == 'QUOTE' or k == 'RETURN':
+    elif k == 'QUOTE':
         kbd.press(Keycode.QUOTE)
     elif k == 'TILDE':
         kbd.press(Keycode.GRAVE_ACCENT)
